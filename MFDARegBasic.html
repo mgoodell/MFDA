@@ -182,9 +182,7 @@
         return re.test(String(email).toLowerCase());
     }
 
-    function register(event) {
-        event.preventDefault();  // Prevent the default form submission
-
+    function register() {
         var title = getUrlParameter('title');
         var firstName = document.getElementById('firstName').value;
         var lastName = document.getElementById('lastName').value;
