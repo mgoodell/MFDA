@@ -98,6 +98,13 @@
             cursor: pointer;
             margin-bottom: 10px;
         }
+	.btn-submit {
+            background-color: #143637;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -149,7 +156,7 @@
                 <input type="email" id="email" name="email" required>
                 <label for="company">Company *</label>
                 <input type="text" id="company" name="company" required>
-                <button type="submit">Register</button>
+		<button type="button" class="btn-submit" onclick="register()">Register</button>    
             </form>
         </div>
     </div>
