@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Registration</title>
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .required-asterisk {
+            color: red;
+            display: none;
+        }
+        .btn-submit {
+            background-color: #143637;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #0d2626;
+        }
+    </style>
+</head>
+<body>
+
+<div id="registration-form" class="page-element">
+    <h2>Register Now</h2>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label>First Name <span class="required-asterisk">*</span></label>
+            <input type="text" id="firstName" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Last Name <span class="required-asterisk">*</span></label>
+            <input type="text" id="lastName" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Email <span class="required-asterisk">*</span></label>
+            <input type="email" id="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Company <span class="required-asterisk">*</span></label>
+            <input type="text" id="company" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>MFDA Membership ID <span class="required-asterisk">*</span></label>
+            <input type="text" id="mfdaMembershipId" class="form-control">
+        </div>
+        <button type="button" class="btn-submit" onclick="register()">Register</button>
+    </form>
+</div>
+
+<script>
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    function validateEmail(email) {
+        var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function register() {
+        var title = getUrlParameter('title');
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
+        var email = document.getElementById('email').value;
+        var company = document.getElementById('company').value;
+        var mfdaMembershipId = document.getElementById('mfdaMembershipId').value;
+        
+        var fields = [
+            { value: firstName, element: document.getElementById('firstName') },
+            { value: lastName, element: document.getElementById('lastName') },
+            { value: email, element: document.getElementById('email') },
+            { value: company, element: document.getElementById('company') },
+            { value: mfdaMembershipId, element: document.getElementById('mfdaMembershipId') }
+        ];
+
+        var valid = true;
+        fields.forEach(function(field) {
+            var label = field.element.previousElementSibling;
+            var asterisk = label.querySelector('.required-asterisk');
+            if (field.value === '') {
+                asterisk.style.display = 'inline';
+                valid = false;
+            } else {
+                asterisk.style.display = 'none';
+            }
+        });
+
+        if (!validateEmail(email)) {
+            document.getElementById('email').previousElementSibling.querySelector('.required-asterisk').style.display = 'inline';
+            valid = false;
+        }
+
+        if (valid) {
+            var registerUrl = `https://join.webinar.net/15xDw9AwEqK/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(company)}&title=${encodeURIComponent(title)}`;
+            window.location.href = registerUrl;
+        }
+    }
+</script>
+
+</body>
+</html>
