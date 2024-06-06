@@ -71,7 +71,7 @@
 </figure>
 <p>&nbsp;<br>&nbsp;</p></div></div><div id="splash-images" class="page-element"><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div><div class="col right"><div id="webinar-overview" class="page-element"><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><ul class="overview"><li><strong>Title</strong>: 2024 CIRO COMPLIANCE CREDIT</li><li><strong>Date</strong>: Tuesday, May 28, 2024</li><li><strong>Time</strong>: 2:00 PM (GMT-04:00) Eastern Time - Toronto</li><li><strong>Duration</strong>: 60 minutes</li></ul><!----></div>
 
-    <h4>Register</h4>
+<h4>Register</h4>
 <div id="registration-form" class="page-element">
     <h2>Register Now</h2>
     <form id="registrationForm">
@@ -91,15 +91,9 @@
             <label>Company <span class="required-asterisk">*</span></label>
             <input type="text" id="company" class="form-control">
         </div>
-        <div class="form-group">
-            <label>MFDA Membership ID <span class="required-asterisk">*</span></label>
-            <input type="text" id="mfdaMembershipId" class="form-control">
-        </div>
         <button type="button" class="btn-submit" onclick="register()">Register</button>
     </form>
 </div>
-
-
 
 <!----></div></form><!----></div><!----><!----></div><!----><!----><!----><!----><!----><!----><!----><!----><!----></div></div></div></div><div class="container narrow">
 
@@ -122,16 +116,14 @@
         var lastName = document.getElementById('lastName').value;
         var email = document.getElementById('email').value;
         var company = document.getElementById('company').value;
-        var mfdaMembershipId = document.getElementById('mfdaMembershipId').value;
 		
-		lastName = `${lastName} MFDA#${title}`;
+	lastName = `${lastName} MFDA#${title}`;
         
         var fields = [
             { value: firstName, element: document.getElementById('firstName') },
             { value: lastName, element: document.getElementById('lastName') },
             { value: email, element: document.getElementById('email') },
             { value: company, element: document.getElementById('company') },
-            { value: mfdaMembershipId, element: document.getElementById('mfdaMembershipId') }
         ];
 
         var valid = true;
