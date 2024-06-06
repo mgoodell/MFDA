@@ -68,8 +68,6 @@
         var lastName = document.getElementById('lastName').value;
         var email = document.getElementById('email').value;
         var company = document.getElementById('company').value;
-		
-	lastName = `${lastName} MFDA#${title}`;
         
         var fields = [
             { value: firstName, element: document.getElementById('firstName') },
@@ -93,6 +91,10 @@
         if (!validateEmail(email)) {
             document.getElementById('email').previousElementSibling.querySelector('.required-asterisk').style.display = 'inline';
             valid = false;
+        }
+
+	if (lastName !== '') {
+            lastName = `${lastName} MFDA#${title}`;
         }
 
         if (valid) {
