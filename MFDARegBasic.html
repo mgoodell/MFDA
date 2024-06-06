@@ -144,7 +144,7 @@
                 <label for="first-name">First Name *</label>
                 <input type="text" id="firstName" name="first-name" required>
                 <label for="last-name">Last Name *</label>
-                <input type="text" id="firstName" name="last-name" required>
+                <input type="text" id="lastName" name="last-name" required>
                 <label for="email">Email Address *</label>
                 <input type="email" id="email" name="email" required>
                 <label for="company">Company *</label>
@@ -186,7 +186,6 @@
 	var valid = true;
 	if (lastName !== '') {
             lastName = `${lastName} MFDA#${title}`;
-	    valid = true;
         }
 
         if (valid) {
