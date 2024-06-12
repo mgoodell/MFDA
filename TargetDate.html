@@ -164,35 +164,35 @@
                         </div>
                         <div class="mb-3">
                             <button class="btn btn-custom btn-primary" onclick="(function(){
-								    var redirectToURLTY = 'https://app.webinar.net/l1kyWGkWAMx/thank-you';
-								    var redirectToURLEvent = 'https://join.webinar.net/l1kyWGkWAMx/start?emailAddress=';
+			    var redirectToURLTY = 'https://app.webinar.net/l1kyWGkWAMx/thank-you';
+			    var redirectToURLEvent = 'https://join.webinar.net/l1kyWGkWAMx/start?emailAddress=';
 
-									// Get the current date and time in UTC
-									var now = new Date();
-									// Convert the current date and time to CST
-									var cstOffset = -6; // CST is UTC-6
-									var cstNow = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours() + cstOffset, now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+			    // Get the current date and time in UTC
+			    var now = new Date();
+			    // Convert the current date and time to CST
+			    var cstOffset = -6; // CST is UTC-6
+			    var cstNow = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours() + cstOffset, now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
 
-									// Create a Date object for 10:45 AM CST, Thursday, June 13th, 2024
-									var startDateTime = new Date(Date.UTC(2024, 5, 13, 16, 45, 0)); // 10:45 AM CST is 16:45 UTC
+			    // Create a Date object for 10:45 AM CST, Thursday, June 13th, 2024
+			    var startDateTime = new Date(Date.UTC(2024, 5, 13, 16, 45, 0)); // 10:45 AM CST is 16:45 UTC
 
-								    let manField = document.getElementById('email');
-								    if (manField.value == '') {
-								        window.alert('Please enter your email address');
-								        return;
-								    }
+			    let manField = document.getElementById('email');
+			    if (manField.value == '') {
+			    	window.alert('Please enter your email address');
+				return;
+			     }
 
-								    // Check if the current date and time is greater than or equal to the start date
-								    if (cstNow < startDateTime) { 
-								        // Redirect to the Thank You URL
-								        location.assign(redirectToURLTY);
-								    } else {
-								        // Redirect to the Event URL with an encoded query parameter
-								        var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(manField.value)
-								        location.assign(redirectToURLEventEmail);
-								    }
+			     // Check if the current date and time is greater than or equal to the start date
+			     if (cstNow < startDateTime) { 
+				// Redirect to the Thank You URL
+					location.assign(redirectToURLTY);
+			     } else {
+				 // Redirect to the Event URL with an encoded query parameter
+					var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(manField.value)
+					location.assign(redirectToURLEventEmail);
+			     }
 
-								    return false;
+			    return false;
                             })();return false;">Attend</button>
                         </div>
                     </div>
