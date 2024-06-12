@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Drift Integration</title>
+    <title></title>
     <style>
         body{
             background-image:linear-gradient(to right, #15847F, #64BB47);
@@ -101,60 +101,60 @@
                         </div>
                         <div class="mb-3">
                             <button class="btn btn-custom btn-primary" onclick="(function(){
-								var redirectToURLTY = 'https://app.webinar.net/l1kyWGkWAMx/thank-you';
-								var redirectToURLEvent = 'https://join.webinar.net/l1kyWGkWAMx/start?emailAddress=';			
-								var redirectToAPI = 'https://registration.webinar.net/integration/7b2e72e7-3b19-4d03-a21d-819babc050e2/666885d14deefc5bc15e6d22';
+				var redirectToURLTY = 'https://app.webinar.net/l1kyWGkWAMx/thank-you';
+				var redirectToURLEvent = 'https://join.webinar.net/l1kyWGkWAMx/start?emailAddress=';			
+				var redirectToAPI = 'https://registration.webinar.net/integration/7b2e72e7-3b19-4d03-a21d-819babc050e2/666885d14deefc5bc15e6d22';
 
-								// Get the current date and time in UTC
-								var now = new Date();
-								// Convert the current date and time to CST
-								var cstOffset = -6; // CST is UTC-6
-								var cstNow = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours() + cstOffset, now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+				// Get the current date and time in UTC
+				var now = new Date();
+				// Convert the current date and time to CST
+				var cstOffset = -6; // CST is UTC-6
+				var cstNow = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours() + cstOffset, now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
 
-								// Create a Date object for 10:45 AM CST, Thursday, June 13th, 2024
-								var startDateTime = new Date(Date.UTC(2024, 5, 13, 16, 45, 0)); // 10:45 AM CST is 16:45 UTC
+				// Create a Date object for 10:45 AM CST, Thursday, June 13th, 2024
+				var startDateTime = new Date(Date.UTC(2024, 5, 13, 16, 45, 0)); // 10:45 AM CST is 16:45 UTC
 
-								let manFields = document.getElementsByClassName('require');
-								for (var i = 0; i < manFields.length; i++){
-								    if(manFields[i].value == ''){
-								        window.alert('Please fill in the required fields');
-								        return;
-								    }
-								}
+				let manFields = document.getElementsByClassName('require');
+				for (var i = 0; i < manFields.length; i++){
+					if(manFields[i].value == ''){
+					window.alert('Please fill in the required fields');
+						return;
+					 }
+					}
 
-								var wFields = ['firstName','lastName','emailAddress', 'cityState'];
-								var data = {};
-								for(var j = 0; j < wFields.length; j++){
-								    data[wFields[j]] = document.getElementById(wFields[j]).value;
-								}
+				var wFields = ['firstName','lastName','emailAddress', 'cityState'];
+				var data = {};
+				for(var j = 0; j < wFields.length; j++){
+					 data[wFields[j]] = document.getElementById(wFields[j]).value;
+					}
 
-								// Set Email Address
-								let emailField = document.getElementById('emailAddress');
+				// Set Email Address
+				let emailField = document.getElementById('emailAddress');
 
-								console.table(data);
-								try {
-								    const xhr = new XMLHttpRequest();
-								    xhr.onreadystatechange = function() {
-								        if (this.readyState == 4 && this.status == 200) {
-								            // Check if the current date and time is greater than or equal to the start date
-								            if (cstNow < startDateTime) { 
-								               // Redirect to the Thank You URL
-								               location.assign(redirectToURLTY);
-								            } else {
-								               // Redirect to the Event URL with an encoded query parameter
-								               var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(emailField.value);
-								               location.assign(redirectToURLEventEmail);
-								            }
-								        }
-								    };
-								    xhr.open('POST', redirectToAPI);
-								    xhr.setRequestHeader('Content-Type', 'application/json');
-								    xhr.send(JSON.stringify(data));
-								} catch (e) {
-								    console.log('wrong');
-								}
+				console.table(data);
+				try {
+					const xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						// Check if the current date and time is greater than or equal to the start date
+						if (cstNow < startDateTime) { 
+							// Redirect to the Thank You URL
+							location.assign(redirectToURLTY);
+						} else {
+							// Redirect to the Event URL with an encoded query parameter
+							var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(emailField.value);
+							location.assign(redirectToURLEventEmail);
+							}
+						 }
+					};
+					xhr.open('POST', redirectToAPI);
+					xhr.setRequestHeader('Content-Type', 'application/json');
+					xhr.send(JSON.stringify(data));
+					} catch (e) {
+						console.log('wrong');
+					}
 
-								return false;
+			    return false;
                             })();return false;">Register</button>
                         </div>
                     </div>
