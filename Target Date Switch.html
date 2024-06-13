@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Drift Integration</title>
+    <style>
+        body{
+            background-image:linear-gradient(to right, #15847F, #64BB47);
+        }
+        .portal{
+            margin-top:2em;
+        }
+        .portal .narrow{
+            padding-top:0;
+        }
+        .portal .narrow .center{
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .reg-page{
+            margin-top: -15px;
+        }
+        .header{
+            padding:0;
+            margin:0;
+            width:100%;
+            max-width:100%;
+        }
+        .header img{
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        sup{
+            color:red;
+        }
+        .smaller{
+            font-size:0.7em;
+        }
+        .btn-custom{
+            background-color: #13837F !important;
+        }
+        .hidden{
+            display:none;
+        }
+        .portal footer {
+            padding-top: 0;
+            padding-bottom: 1.5em;
+        }
+        .portal .page-element:first-child {
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="reg-page">
+        <div class="row header">
+            <img src="https://cdn.webinar.net/header-banners/abc960ed-4c3a-447d-87d1-ff0d1cba8fa1.png" alt="header">
+        </div>
+        <div class="row" style="padding:3em 3em 0 2em;">
+            <div class="col-lg-6">
+                <div class="row" id="reg-header">
+                    <div class="col-md-7"><strong style="font-size:1.3em">Register Now</strong></div>
+                    <div class="col-md-5"><a href="" style="float:right;" onclick="(function(){
+                        document.getElementById('reg-header').classList.add('hidden');
+                        document.getElementById('login-header').classList.remove('hidden');
+                        document.getElementById('reg-form').classList.add('hidden');
+                        document.getElementById('login-form').classList.remove('hidden');
+                        return false})();
+                        return false;">Already Registered?</a></div>
+                </div>
+                <div class="row hidden" id="login-header">
+                    <div class="col-md-7"><strong style="font-size:1.3em">Log In Now</strong></div>
+                    <div class="col-md-5"><a href="" style="float:right;" onclick="(function(){
+                        document.getElementById('reg-header').classList.remove('hidden');
+                        document.getElementById('login-header').classList.add('hidden');
+                        document.getElementById('reg-form').classList.remove('hidden');
+                        document.getElementById('login-form').classList.add('hidden');
+                        return false})();
+                        return false;">Register Now</a></div>
+                </div>
+                <br>
+                <form>
+                    <div id="reg-form">
+                        <div class="mb-3">
+                            <label class="form-label" for="firstName">First Name<sup>*</sup></label>
+                            <input class="form-control require" name="firstName" id="firstName" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="lastName">Last Name<sup>*</sup></label>
+                            <input class="form-control require" name="lastName" id="lastName" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="emailAddress">Email Address<sup>*</sup></label>
+                            <input class="form-control require" name="emailAddress" id="emailAddress" type="email">
+                        </div>
+                        <!-- Adding City, State field here -->
+                        <div class="mb-3">
+                            <label class="form-label" for="cityState">City, State<sup>*</sup></label>
+                            <input class="form-control require" name="cityState" id="cityState" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-custom btn-primary" onclick="(function(){
+								var redirectToURLTY = 'https://app.webinar.net/l1kyWGkWAMx/thank-you';
+								var redirectToURLEvent = 'https://join.webinar.net/l1kyWGkWAMx/start?emailAddress=';			
+								var redirectToAPI = 'https://registration.webinar.net/integration/7b2e72e7-3b19-4d03-a21d-819babc050e2/666885d14deefc5bc15e6d22';
+
+								// #1 Update Code Here
+								var switchOnOff = 'TY'
+								
+								// Set Email Address
+								let emailField = document.getElementById('emailAddress');
+
+								let manFields = document.getElementsByClassName('require');
+								for (var i = 0; i < manFields.length; i++){
+								    if(manFields[i].value == ''){
+								        window.alert('Please fill in the required fields');
+								        return;
+								    }
+								}
+
+								var wFields = ['firstName','lastName','emailAddress', 'cityState'];
+								var data = {};
+								for(var j = 0; j < wFields.length; j++){
+								    data[wFields[j]] = document.getElementById(wFields[j]).value;
+								}
+
+								console.table(data);
+								try {
+								    const xhr = new XMLHttpRequest();
+								    xhr.onreadystatechange = function() {
+								        if (this.readyState == 4 && this.status == 200) {
+								            if (switchOnOff == 'TY') { 
+								               // Redirect to the Thank You URL
+								               location.assign(redirectToURLTY);
+								            } else {
+								               // Redirect to the Event URL with an encoded query parameter
+								               var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(emailField.value);
+								               location.assign(redirectToURLEventEmail);
+								            }
+								        }
+								    };
+								    xhr.open('POST', redirectToAPI);
+								    xhr.setRequestHeader('Content-Type', 'application/json');
+								    xhr.send(JSON.stringify(data));
+								} catch (e) {
+								    console.log('wrong');
+								}
+
+								return false;
+                            })();return false;">Register</button>
+                        </div>
+                    </div>
+                    <div class="hidden" id="login-form">
+                        <div class="mb-3">
+                            <input class="form-control" name="email" id="email" type="email" placeholder="Enter Your Email Address">
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-custom btn-primary" onclick="(function(){
+								    var redirectToURLTY = 'https://app.webinar.net/l1kyWGkWAMx/thank-you';
+								    var redirectToURLEvent = 'https://join.webinar.net/l1kyWGkWAMx/start?emailAddress=';
+
+									// #2 Update Code Here
+									var switchOnOff = 'TY'				
+								
+								    let manField = document.getElementById('email');
+								    if (manField.value == '') {
+								        window.alert('Please enter your email address');
+								        return;
+								    }
+
+								    if (switchOnOff == 'TY') { 
+								        // Redirect to the Thank You URL
+								        location.assign(redirectToURLTY);
+								    } else {
+								        // Redirect to the Event URL with an encoded query parameter
+								        var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(manField.value)
+								        location.assign(redirectToURLEventEmail);
+								    }
+
+								    return false;
+                            })();return false;">Attend</button>
+                        </div>
+                    </div>
+                </form>
+                <p style="padding-top:1em">
+                    <strong style="font-size:1.1em!important;">Please See Full Prescribing Information<br>
+                        <a style="color:#13847E !important" href="https://www.rxabbvie.com/pdf/vyalev_pi.pdf" target="_blank">Click Here</a></strong>
+                </p>
+            </div>
+            <div class="col-lg-6" style="padding-left:4em">
+                <p style="font-size:1.1em;width:85%">
+                    <strong>NOTE:</strong> For this viewing experience, you must disconnect from a virtual private network (VPN). If that's not possible, please join using a personal device and/or a cellular network.
+                </p>
+                <p style="font-size:1.1em">
+                    <strong>SUPPORT:</strong><br>
+                    If you need help, please email:<br>
+                    <a class="email-link" style="color:#13847E !important;text-decoration:none!important;font-weight:bold" href="mailto:support@webinar.net">support@webinar.net</a><br>
+                    Or call:
+                    <br>
+                    <a class="email-link" style="color:#13847E !important;text-decoration:none!important;font-weight:bold" href="tel:+14158086480">+1(415) 808-6480</a>
+                    <br>
+                    <a class="email-link" style="color:#13847E !important;text-decoration:none!important;font-weight:bold" href="tel:+14156513312">+1(415) 651-3312 </a><br>
+                    with any technical support needs.
+                </p>
+                <div style="padding-top:1.5em;width:83%;">
+                    <p class="smaller">
+                        In accordance with the PhRMA Code on Interactions with Healthcare Professionals, attendance at this program is limited to healthcare professionals who practice in relevant specialties.
+                    </p>
+                    <p class="smaller">
+                        AbbVie tracks and reports payments and transfers of value to healthcare professionals under applicable state and federal reporting obligations.
+                    </p>
+                    <p class="smaller">
+                        Attendance at an AbbVie virtual webinar does not include a meal and no other resources will be sent to you as a result of attending. AbbVie does not report any transfer of value for attendees of its virtual webinar programs where no meal or other transfer of value is provided.
+                    </p>
+                    <p class="smaller">
+                        © 2024 AbbVie. All rights reserved. VYALEV™ and its design are trademarks of AbbVie Inc US-VYAL-230075 May 2024</p>
+                </div>
+                <div style="position:absolute;right:0;bottom:-35px;">
+                    <img src="https://cdn.webinar.net/backgrounds/8e5df049-7700-4084-a5c2-2d7860dfc318.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
