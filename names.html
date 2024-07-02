@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dropdown with Type-Ahead</title>
+    <title>Dropdown with Search</title>
     <style>
-        /* Style the dropdown */
         .dropdown {
             position: relative;
             display: inline-block;
         }
-
         .dropdown-content {
             display: none;
             position: absolute;
@@ -19,83 +17,75 @@
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
-
-        .dropdown-content div {
+        .dropdown-content a {
             color: black;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
         }
-
-        .dropdown-content div:hover {
-            background-color: #f1f1f1;
-        }
-
-        .show {display: block;}
+        .dropdown-content a:hover {background-color: #f1f1f1}
+        .show {display:block;}
     </style>
 </head>
 <body>
 
 <div class="dropdown">
-    <input type="text" id="dropdownInput" onkeyup="filterFunction()" placeholder="Search names..">
-    <div id="dropdownContent" class="dropdown-content"></div>
+    <input type="text" id="searchInput" onkeyup="filterFunction()" placeholder="Search for names..">
+    <div id="dropdown-content" class="dropdown-content">
+        <!-- Options will be populated here -->
+    </div>
 </div>
 
 <script>
-    async function fetchNames() {
-        const response = await fetch('https://cdn.webinar.net/resources/0166761b-1a8b-46dc-a36f-fcc4057e86b8.txt');
-        const text = await response.text();
-        return text.split('\n').map(name => name.trim()).filter(name => name);
-    }
+    // URL of the hosted text file
+    const fileUrl = 'https://cdn.webinar.net/resources/0166761b-1a8b-46dc-a36f-fcc4057e86b8.txt';
 
-    function createDropdown(names) {
-        const dropdownContent = document.getElementById('dropdownContent');
-        dropdownContent.innerHTML = '';
+    document.addEventListener('DOMContentLoaded', (event) => {
+        fetch(fileUrl)
+            .then(response => response.text())
+            .then(data => {
+                const names = data.split('\n').map(name => name.trim()).filter(name => name.length > 0);
+                populateDropdown(names);
+            });
+    });
 
+    function populateDropdown(names) {
+        const dropdown = document.getElementById('dropdown-content');
         names.forEach(name => {
-            const div = document.createElement('div');
-            div.textContent = name;
-            div.onclick = function() {
-                document.getElementById('dropdownInput').value = name;
-                closeDropdown();
-            };
-            dropdownContent.appendChild(div);
+            const option = document.createElement('a');
+            option.textContent = name;
+            option.href = "#";
+            dropdown.appendChild(option);
         });
     }
 
     function filterFunction() {
-        const input = document.getElementById('dropdownInput');
-        const filter = input.value.toLowerCase();
-        const divs = document.getElementById('dropdownContent').getElementsByTagName('div');
-
-        for (let i = 0; i < divs.length; i++) {
-            const txtValue = divs[i].textContent || divs[i].innerText;
-            if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                divs[i].style.display = '';
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toUpperCase();
+        const div = document.getElementById('dropdown-content');
+        const a = div.getElementsByTagName('a');
+        for (let i = 0; i < a.length; i++) {
+            const txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
             } else {
-                divs[i].style.display = 'none';
+                a[i].style.display = "none";
+            }
+        }
+        div.classList.add('show');
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('#searchInput')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
             }
         }
     }
-
-    function closeDropdown() {
-        document.getElementById('dropdownContent').classList.remove('show');
-    }
-
-    document.getElementById('dropdownInput').addEventListener('focus', function() {
-        document.getElementById('dropdownContent').classList.add('show');
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!e.target.matches('#dropdownInput')) {
-            closeDropdown();
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', async function() {
-        const names = await fetchNames();
-        createDropdown(names);
-    });
 </script>
 
 </body>
