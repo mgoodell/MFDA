@@ -4,41 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dropdown with Type Ahead</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <style>
-        .ui-autocomplete {
-            max-height: 200px;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-    </style>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
-    <form id="myForm">
-        <label for="dropdown">Select Name:</label>
-        <input id="dropdown" name="dropdown">
-        <button type="submit">Submit</button>
-    </form>
+    <label for="name-dropdown">Select Name: </label>
+    <input id="name-dropdown" type="text">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.4/jquery.xdomainrequest.min.js"></script>
     <script>
         $(document).ready(function() {
-            // URL of the hosted file
-            const url = 'https://sqps.onstreamsecure.com/origin/demo1/inbox/first-names.json'; // Replace with your actual URL
+            // URL to fetch the names from
+            const url = 'https://sqps.onstreamsecure.com/origin/demo1/inbox/first-names.json';
 
-            // Fetch data from the hosted file
+            // Fetch names from the hosted file
             $.getJSON(url, function(data) {
-                const names = data.names; // Assuming the JSON structure is { "names": ["Name1", "Name2", ...] }
+                const names = data.names; // Assuming the JSON has an array of names under the key 'names'
 
-                // Initialize jQuery UI Autocomplete
-                $('#dropdown').autocomplete({
+                // Initialize the autocomplete widget
+                $('#name-dropdown').autocomplete({
                     source: names,
-                    minLength: 2 // Start suggesting after 2 characters
+                    minLength: 2 // Start suggesting after typing 2 characters
                 });
             }).fail(function() {
-                console.error('Failed to fetch data from the hosted file.');
+                console.error('Failed to fetch names');
             });
         });
     </script>
