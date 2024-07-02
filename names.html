@@ -50,12 +50,14 @@
             .then(response => response.text())
             .then(data => {
                 const names = data.split('\n').map(name => name.trim()).filter(name => name.length > 0);
+                names.sort((a, b) => a.localeCompare(b)); // Sort names alphabetically
                 populateDropdown(names);
             });
     });
 
     function populateDropdown(names) {
         const dropdown = document.getElementById('dropdown-content');
+        dropdown.innerHTML = ''; // Clear existing options
         names.forEach(name => {
             const option = document.createElement('a');
             option.textContent = name;
