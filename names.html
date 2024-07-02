@@ -3,90 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dropdown with Type-Ahead</title>
-    <style>
-        /* Basic styling for the dropdown */
-        .dropdown-container {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .dropdown-input {
-            width: 200px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        
-        .dropdown-list {
-            position: absolute;
-            z-index: 1;
-            border: 1px solid #ccc;
-            border-top: none;
-            width: 200px;
-            max-height: 150px;
-            overflow-y: auto;
-            background-color: white;
-        }
-        
-        .dropdown-item {
-            padding: 8px;
-            cursor: pointer;
-        }
-        
-        .dropdown-item:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
+    <title>Dropdown List from JSON</title>
 </head>
 <body>
-    <div class="dropdown-container">
-        <input type="text" id="dropdownInput" class="dropdown-input" placeholder="Type to search...">
-        <div id="dropdownList" class="dropdown-list" style="display:none;"></div>
-    </div>
+    <h1>Select a Name</h1>
+    <select id="nameDropdown">
+        <option value="">Select a name</option>
+    </select>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const dropdownInput = document.getElementById('dropdownInput');
-            const dropdownList = document.getElementById('dropdownList');
-            let names = [];
+        // URL of the hosted JSON file
+        const jsonUrl = 'https://sqps.onstreamsecure.com/origin/demo1/inbox/names.json';
 
-            // Fetch names from hosted JSON file
-            fetch('https://sqps.onstreamsecure.com/origin/demo1/inbox/names.json')
-                .then(response => response.json())
-                .then(data => {
-                    names = data.names;
-                })
-                .catch(error => console.error('Error fetching names:', error));
-
-            dropdownInput.addEventListener('input', function () {
-                const query = dropdownInput.value.toLowerCase();
-                dropdownList.innerHTML = '';
+        // Function to fetch the JSON data and populate the dropdown
+        async function populateDropdown() {
+            try {
+                const response = await fetch(jsonUrl);
+                const data = await response.json();
                 
-                if (query) {
-                    const filteredNames = names.filter(name => name.toLowerCase().includes(query));
-                    filteredNames.forEach(name => {
-                        const div = document.createElement('div');
-                        div.className = 'dropdown-item';
-                        div.textContent = name;
-                        div.addEventListener('click', function () {
-                            dropdownInput.value = name;
-                            dropdownList.style.display = 'none';
-                        });
-                        dropdownList.appendChild(div);
-                    });
-                    dropdownList.style.display = filteredNames.length ? 'block' : 'none';
-                } else {
-                    dropdownList.style.display = 'none';
-                }
-            });
+                const dropdown = document.getElementById('nameDropdown');
+                data.names.forEach(name => {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    dropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching the JSON data:', error);
+            }
+        }
 
-            document.addEventListener('click', function (event) {
-                if (!event.target.closest('.dropdown-container')) {
-                    dropdownList.style.display = 'none';
-                }
-            });
-        });
+        // Call the function to populate the dropdown when the page loads
+        window.onload = populateDropdown;
     </script>
 </body>
 </html>
