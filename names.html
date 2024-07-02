@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown with Type Ahead</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .ui-autocomplete {
+            max-height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <form id="myForm">
+        <label for="dropdown">Select Name:</label>
+        <input id="dropdown" name="dropdown">
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.4/jquery.xdomainrequest.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // URL of the hosted file
+            const url = 'https://sqps.onstreamsecure.com/origin/demo1/inbox/first-names.json'; // Replace with your actual URL
+
+            // Fetch data from the hosted file
+            $.getJSON(url, function(data) {
+                const names = data.names; // Assuming the JSON structure is { "names": ["Name1", "Name2", ...] }
+
+                // Initialize jQuery UI Autocomplete
+                $('#dropdown').autocomplete({
+                    source: names,
+                    minLength: 2 // Start suggesting after 2 characters
+                });
+            }).fail(function() {
+                console.error('Failed to fetch data from the hosted file.');
+            });
+        });
+    </script>
+</body>
+</html>
