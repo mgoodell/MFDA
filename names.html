@@ -13,7 +13,7 @@
             display: none;
             position: absolute;
             background-color: #f9f9f9;
-            min-width: 200px;
+            min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
@@ -29,8 +29,9 @@
 </head>
 <body>
 
+<label for="searchInput">Name:</label>
 <div class="dropdown">
-    <input type="text" id="searchInput" onkeyup="filterFunction()" placeholder="Start typying to search for your name..">
+    <input type="text" id="searchInput" onkeyup="filterFunction()" placeholder="Search for names..">
     <div id="dropdown-content" class="dropdown-content">
         <!-- Options will be populated here -->
     </div>
@@ -55,8 +56,20 @@
             const option = document.createElement('a');
             option.textContent = name;
             option.href = "#";
+            option.onclick = () => {
+                const [firstName, lastName] = splitName(name);
+                console.log(`First Name: ${firstName}, Last Name: ${lastName}`);
+            };
             dropdown.appendChild(option);
         });
+    }
+
+    function splitName(name) {
+        const parts = name.split(' ');
+        const midIndex = Math.floor(parts.length / 2);
+        const firstName = parts.slice(0, midIndex).join(' ');
+        const lastName = parts.slice(midIndex).join(' ');
+        return [firstName, lastName];
     }
 
     function filterFunction() {
