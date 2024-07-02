@@ -36,10 +36,14 @@
         <!-- Options will be populated here -->
     </div>
 </div>
+<button onclick="submitName()">Submit</button>
+<div id="result"></div>
 
 <script>
     // URL of the hosted text file
     const fileUrl = 'https://cdn.webinar.net/resources/0166761b-1a8b-46dc-a36f-fcc4057e86b8.txt';
+
+    let selectedName = '';
 
     document.addEventListener('DOMContentLoaded', (event) => {
         fetch(fileUrl)
@@ -57,8 +61,10 @@
             option.textContent = name;
             option.href = "#";
             option.onclick = () => {
-                const [firstName, lastName] = splitName(name);
-                console.log(`First Name: ${firstName}, Last Name: ${lastName}`);
+                selectedName = name;
+                const input = document.getElementById('searchInput');
+                input.value = name;
+                filterFunction(); // Ensure dropdown closes after selection
             };
             dropdown.appendChild(option);
         });
@@ -97,6 +103,16 @@
                     openDropdown.classList.remove('show');
                 }
             }
+        }
+    }
+
+    function submitName() {
+        if (selectedName) {
+            const [firstName, lastName] = splitName(selectedName);
+            const result = document.getElementById('result');
+            result.textContent = `Name: ${lastName}, ${firstName}`;
+        } else {
+            alert('Please select a name from the dropdown.');
         }
     }
 </script>
