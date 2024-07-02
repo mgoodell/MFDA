@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+        .header {
+            width: 100%;
+            background-color: #fff;
+            padding: 0px 0;
+        }
+        .header img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            max-width: 850px;
+            margin: auto;
+            gap: 20px; /* Gap between columns */
+        }
+        .column {
+            width: 450px;
+            box-sizing: border-box;
+        }
+        .summary {
+            width: 58%;
+            box-sizing: border-box;
+        }
+        .summary h1 {
+            font-size: 24px;
+            color: #000000;
+        }
+        .summary p {
+            font-size: 14px;
+            color: #333;
+        }
+        .form-container {
+            width: 50%;
+            box-sizing: border-box;
+            padding: 20px;
+            /* border-radius: 8px; */
+            background-color: #ffffff;
+        }
+        .form-container h2 {
+            font-size: 24px;
+            color: #000000;
+        }
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-container form label {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .form-container form input {
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            /* border-radius: 4px; */
+        }
+        .form-container form button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #062A2A;
+            border: none;
+            border-radius: 4px; 
+            cursor: pointer;
+        }
+        .form-container form button:hover {
+            background-color: #062A2A;
+        }
+        .already-registered {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .already-registered a {
+            font-size: 14px;
+            color: #000000;
+            text-decoration: underline;
+        }
+        .already-registered a:hover {
+            text-decoration: underline;
+        }
+        details summary {
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .responsive-image {
+            width: 70%; /* Adjust percentage as needed */
+            height: auto;
+        }
+        .footer {
+            background-color: #fff;
+            padding: 20px 0;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            max-width: 850px;
+            margin: auto;
+            gap: 20px; /* Gap between columns */
+        }
+        .footer p {
+            margin: 0;
+            padding-top: 30px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .summary, .form-container {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .summary h1 {
+                font-size: 20px;
+            }
+            .summary p, .form-container h2 {
+                font-size: 18px;
+            }
+            .form-container form label, .form-container form input {
+                font-size: 14px;
+            }
+            .form-container form button {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 10px 0;
+            }
+            .container {
+                padding: 10px;
+            }
+            .summary h1 {
+                font-size: 18px;
+            }
+            .summary p, .form-container h2 {
+                font-size: 14px;
+            }
+            .form-container form label, .form-container form input {
+                font-size: 14px;
+            }
+            .form-container form button {
+                font-size: 16px;
+            }
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {background-color: #f1f1f1}
+        .show {display:block;}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://cdn.webinar.net/backgrounds/820b9075-cf5c-4357-9daf-56d9acd4842c.png" alt="CIRO OCRI Logo" class="responsive-image">
+    </div>
+    <div class="container">
+        <div class="column summary">
+            <h1>Summary</h1>
+            <details>
+                <summary><strong><u>Expand</u></strong><br>&nbsp;</summary>
+                <p>Welcome to the Registration Page for the <em>2024 Compliance Credit</em> webcast, the first of 2 mandatory compliance credits for the 2024-2025 cycle of the Mutual Fund Dealer Continuing Education (“CE”) Program (previously the MFDA CE Program). The 2024 Compliance Credit provides guidance on the following topics:</p>
+                <ul>
+                    <li><p><strong>Client Focused Reforms: Conflicts of Interest Sweep &amp; Joint CSA/CIRO Report</strong> – Lisa Caputo, Manager, Business Conduct Compliance and Sasha Latka, Manager, Business Conduct Compliance</p></li>
+                    <li><p><strong>Misleading Communications: Advisor Ranking Contests</strong> – Iris Titov, Member Education Consultant, David Wright, Senior Counsel, Business Conduct Compliance, and Jeffrey Yewer, Senior Manager, Business Conduct Compliance</p></li>
+                </ul>
+            </details>
+            <p><strong>To be deemed fully complete, you must</strong>:</p>
+            <ul>
+                <li><p>view the entire webcast, AND</p></li>
+                <li><p>complete the knowledge review questions throughout the webcast. One notable addition to the 2024 Compliance Credit is this requirement for Participants to complete knowledge review questions throughout the webcast to help reinforce your knowledge and understanding of the subject matter. While an overall minimum score will not be required, <strong>you must complete these knowledge review questions to receive credit for the webcast</strong>.</p></li>
+            </ul>
+            <p><strong>We suggest setting aside approximately one hour of uninterrupted time to take the credit.</strong></p>
+            <p>Once fully completed, credit for completing this webcast will be automatically updated on CERTS biweekly.</p>
+            <p>We recommend Chrome, Firefox, Safari, or Edge for the best user experience. If you require more information, or experience any difficulties, please contact us at <a href="mailto:mutualfunddealerCE@ciro.ca">mutualfunddealerCE@ciro.ca</a>.</p>
+            <figure>
+                <table style="border:10px solid #5c7c8b;" cellspacing="7" cellpadding="10">
+                    <tbody>
+                        <tr>
+                            <td style="padding:10px;" bgcolor="#5C7C8B"><span style="color:#ffffff;"><strong>Automated Process for Continuing Education (CE) Credit Certificates</strong></span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px;font-size:14px;" bgcolor="#FFFFFF">CE credit certificates are produced automatically upon completion of the webcast. The CE certificate will be emailed to you for your own records. Alternatively, you can use the “Download Certificate Now” button.</td>
+                        </tr>
+                    </tbody>
+                </table>  
+            </figure>  
+        </div>
+        <div class="form-container">
+            <div>
+                <span><strong>Title: </strong>2024 CIRO MFD COMPLIANCE CREDIT<br><strong>Duration: </strong>60 minutes</span>
+                <br><br><br>   
+            </div>
+            <div class="already-registered">
+                <a href="https://app.webinar.net/8z3LPA2RbNd">Already Registered?</a>
+            </div>
+            <h2>Register Now</h2>
+            <form id="registrationForm" onsubmit="register(event)">
+                <label for="searchInput">Name <span style="color: red;">*</span></label>
+                <input type="text" id="searchInput" name="name" onkeyup="filterFunction()" placeholder="Type to search ..." required>
+                <div id="dropdown-content" class="dropdown-content">
+                    <!-- Options will be populated here -->
+                </div>
+                <label for="email">Email Address <span style="color: red;">*</span></label>
+                <input type="email" id="email" name="email" required>
+                <label for="company">Member <span style="color: red;">*</span></label>
+                <input type="text" id="company" name="company" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <p>© 2024 webinar.net</p>
+    </div> 
+
+    <script>
+        const fileUrl = 'https://cdn.webinar.net/resources/cbe29169-251d-44be-a1f6-c71f4a586cb2.txt';
+
+        let selectedName = '';
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            fetch(fileUrl)
+                .then(response => response.text())
+                .then(data => {
+                    const names = data.split('\n').map(name => name.trim()).filter(name => name.length > 0);
+                    names.sort((a, b) => a.localeCompare(b)); // Sort names alphabetically
+                    populateDropdown(names);
+                });
+        });
+
+        function populateDropdown(names) {
+            const dropdown = document.getElementById('dropdown-content');
+            dropdown.innerHTML = ''; // Clear existing options
+            names.forEach(name => {
+                const option = document.createElement('a');
+                option.textContent = name;
+                option.href = "#";
+                option.onclick = () => {
+                    selectedName = name;
+                    const input = document.getElementById('searchInput');
+                    input.value = name;
+                    filterFunction(); // Ensure dropdown closes after selection
+                };
+                dropdown.appendChild(option);
+            });
+        }
+
+        function splitName(name) {
+            const parts = name.split(' ');
+            const midIndex = Math.floor(parts.length / 2);
+            const firstName = parts.slice(0, midIndex).join(' ');
+            const lastName = parts.slice(midIndex).join(' ');
+            return [firstName, lastName];
+        }
+
+        function filterFunction() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const div = document.getElementById('dropdown-content');
+            const a = div.getElementsByTagName('a');
+            for (let i = 0; i < a.length; i++) {
+                const txtValue = a[i].textContent || a[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+            div.classList.add('show');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('#searchInput')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function getUrlParameter(name) {
+            var queryString = window.location.search.substring(1);
+            var params = queryString.split('&');
+            var lowerName = name.toLowerCase();
+
+            for (var i = 0; i < params.length; i++) {
+                var param = params[i].split('=');
+                if (param[0].toLowerCase() === lowerName) {
+                    return param[1] === undefined ? true : decodeURIComponent(param[1]);
+                }
+            }
+            return null;
+        }
+
+        function validateEmail(email) {
+            var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function register(event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            var title = getUrlParameter('userID');
+            var name = document.getElementById('searchInput').value;
+            var email = document.getElementById('email').value;
+            var company = document.getElementById('company').value;
+            
+            var fields = [
+                { value: name, element: document.getElementById('searchInput') },
+                { value: email, element: document.getElementById('email') },
+                { value: company, element: document.getElementById('company') },
+            ];
+
+            var valid = true;
+
+            if (valid) {
+                var registerUrl = `https://join.webinar.net/8z3LPA2RbNd/launch?name=${encodeURIComponent(name)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(company)}&title=${encodeURIComponent(title)}`;
+                window.location.href = registerUrl;
+            }
+        }
+    </script>
+</body>
+</html>
