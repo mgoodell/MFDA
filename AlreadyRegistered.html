@@ -382,10 +382,9 @@
                 var wFields = ['firstName', 'lastName', 'emailAddress', 'company'];
                 var data = {};
 
-                // Get the full name from an input field
-                var fullName = document.getElementById('fullName').value;
-                var [firstName, lastName] = splitName(fullName);
-
+                // Get the first and last name from dropdown
+	        var name = document.getElementById('searchInput').value;
+                var [firstName, lastName] = splitName(name);
                 data['firstName'] = firstName;
                 data['lastName'] = lastName;
 
