@@ -379,20 +379,20 @@
                 // Set Email Address
 		let emailField = document.getElementById('email');
 
-		// Set Company 
+		// Set Company
 		var company = document.getElementById('company').value;
 
-                var wFields = ['firstName', 'lastName', 'email', 'company'];
-                var data = {};
+		var wFields = ['firstName', 'lastName', 'email', 'company'];
+		var data = {};
 
-                // Get the first and last name from dropdown
-	        var name = document.getElementById('searchInput').value;
-                var [firstName, lastName] = splitName(name);
-                data['firstName'] = firstName;
-		
-		// Format last name    
-		var mfdaNumber = ' MFDA#'    
-                data['lastName'] =  lastName + mfdaNumber + company
+		// Get the first and last name from dropdown
+		var name = document.getElementById('searchInput').value;
+		var [firstName, lastName] = splitName(name);
+		data['firstName'] = firstName;
+
+		// Format last name
+		var mfdaNumber = ' MFDA#';
+		data['lastName'] = `${lastName}${mfdaNumber}${company}`;
 		
 		data['email'] = document.getElementById('email').value;
 		data['company'] = document.getElementById('company').value;
