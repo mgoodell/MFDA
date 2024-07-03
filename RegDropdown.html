@@ -320,17 +320,25 @@
         }
 
         function getUrlParameter(name) {
-            var queryString = window.location.search.substring(1);
-            var params = queryString.split('&');
-            var lowerName = name.toLowerCase();
+        // Get the full URL query string
+        var queryString = window.location.search.substring(1);
+        // Split the query string into key-value pairs
+        var params = queryString.split('&');
+        // Convert the desired parameter name to lowercase
+        var lowerName = name.toLowerCase();
 
-            for (var i = 0; i < params.length; i++) {
-                var param = params[i].split('=');
-                if (param[0].toLowerCase() === lowerName) {
-                    return param[1] === undefined ? true : decodeURIComponent(param[1]);
-                }
+        // Loop through the parameters
+        for (var i = 0; i < params.length; i++) {
+            // Split each parameter into key and value
+            var param = params[i].split('=');
+            // Check if the parameter name matches (case-insensitive)
+            if (param[0].toLowerCase() === lowerName) {
+                // Return the value of the matching parameter
+            r    eturn param[1] === undefined ? true : decodeURIComponent(param[1]);
             }
-            return null;
+          }
+        // Return null if the parameter was not found
+        return null;
         }
 
         function validateEmail(email) {
@@ -338,11 +346,12 @@
             return re.test(String(email).toLowerCase());
         }
 
-        function register(event) {
+            function register(event) {
             event.preventDefault();  // Prevent the default form submission
 
             var title = getUrlParameter('userID');
             var name = document.getElementById('searchInput').value;
+            var [firstName, lastName] = splitName(name);
             var email = document.getElementById('email').value;
             var company = document.getElementById('company').value;
             
@@ -355,7 +364,7 @@
             var valid = true;
 
             if (valid) {
-                var registerUrl = `https://join.webinar.net/ybNmM5BDgX5/launch?name=${encodeURIComponent(name)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(company)}&title=${encodeURIComponent(title)}`;
+                var registerUrl = `https://join.webinar.net/ybNmM5BDgX5/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(company)}&title=${encodeURIComponent(title)}`;
                 window.location.href = registerUrl;
             }
         }
