@@ -258,11 +258,6 @@
         <div class="form-container email-form" id="emailFormContainer">
             <h2>Login</h2>
             <form id="loginForm" onsubmit="login(event)">
-                <label for="loginName">Name <span style="color: red;">*</span></label>
-                <input type="text" id="loginName" name="loginName" onkeyup="filterFunction()" placeholder="Type to search ..." required>
-                <div id="dropdown-content" class="dropdown-content">
-                    <!-- Options will be populated here -->
-                </div>
                 <label for="loginEmail">Email Address <span style="color: red;">*</span></label>
                 <input type="email" id="loginEmail" name="loginEmail" required>
                 <button type="submit">Login</button>
@@ -289,21 +284,19 @@
         });
 
         function populateDropdown(names) {
-            const dropdowns = document.querySelectorAll('#dropdown-content');
-            dropdowns.forEach(dropdown => {
-                dropdown.innerHTML = ''; // Clear existing options
-                names.forEach(name => {
-                    const option = document.createElement('a');
-                    option.textContent = name;
-                    option.href = "#";
-                    option.onclick = () => {
-                        selectedName = name;
-                        const input = dropdown.previousElementSibling;
-                        input.value = name;
-                        filterFunction(); // Ensure dropdown closes after selection
-                    };
-                    dropdown.appendChild(option);
-                });
+            const dropdown = document.getElementById('dropdown-content');
+            dropdown.innerHTML = ''; // Clear existing options
+            names.forEach(name => {
+                const option = document.createElement('a');
+                option.textContent = name;
+                option.href = "#";
+                option.onclick = () => {
+                    selectedName = name;
+                    const input = document.getElementById('searchInput');
+                    input.value = name;
+                    filterFunction(); // Ensure dropdown closes after selection
+                };
+                dropdown.appendChild(option);
             });
         }
 
@@ -316,25 +309,23 @@
         }
 
         function filterFunction() {
-            const inputs = document.querySelectorAll('#searchInput, #loginName');
-            inputs.forEach(input => {
-                const filter = input.value.toUpperCase();
-                const div = input.nextElementSibling;
-                const a = div.getElementsByTagName('a');
-                for (let i = 0; i < a.length; i++) {
-                    const txtValue = a[i].textContent || a[i].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        a[i].style.display = "";
-                    } else {
-                        a[i].style.display = "none";
-                    }
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const div = document.getElementById('dropdown-content');
+            const a = div.getElementsByTagName('a');
+            for (let i = 0; i < a.length; i++) {
+                const txtValue = a[i].textContent || a[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
                 }
-                div.classList.add('show');
-            });
+            }
+            div.classList.add('show');
         }
 
         window.onclick = function(event) {
-            if (!event.target.matches('#searchInput') && !event.target.matches('#loginName')) {
+            if (!event.target.matches('#searchInput')) {
                 const dropdowns = document.getElementsByClassName("dropdown-content");
                 for (let i = 0; i < dropdowns.length; i++) {
                     const openDropdown = dropdowns[i];
@@ -391,12 +382,10 @@
         function login(event) {
             event.preventDefault();  // Prevent the default form submission
 
-            var name = document.getElementById('loginName').value;
-            var [firstName, lastName] = splitName(name);
             var email = document.getElementById('loginEmail').value;
 
             if (validateEmail(email)) {
-                var loginUrl = `https://join.webinar.net/ybNmM5BDgX5/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}`;
+                var loginUrl = `https://join.webinar.net/ybNmM5BDgX5?email=${encodeURIComponent(email)}`;
                 window.location.href = loginUrl;
             } else {
                 alert('Please enter a valid email address.');
