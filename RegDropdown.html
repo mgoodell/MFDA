@@ -70,6 +70,11 @@
             font-size: 14px;
             /* border-radius: 4px; */
         }
+        .form-container form select {
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+        }
         .form-container form button {
             margin-top: 20px;
             padding: 10px;
@@ -237,15 +242,19 @@
             </div>
             <h2>Register Now</h2>
             <form id="registrationForm" onsubmit="register(event)">
-                <label for="searchInput">Name <span style="color: red;">*</span></label>
-                <input type="text" id="searchInput" name="name" onkeyup="filterFunction()" placeholder="Type to search ..." required>
-                <div id="dropdown-content" class="dropdown-content">
-                    <!-- Options will be populated here -->
-                </div>
+                <label for="firstName">First Name <span style="color: red;">*</span></label>
+                <input type="text" id="firstName" name="firstName" required>
+                <label for="lastName">Last Name <span style="color: red;">*</span></label>
+                <input type="text" id="lastName" name="lastName" required>
                 <label for="email">Email Address <span style="color: red;">*</span></label>
                 <input type="email" id="email" name="email" required>
-                <label for="company">Member <span style="color: red;">*</span></label>
-                <input type="text" id="company" name="company" required>
+                <label for="member">Member <span style="color: red;">*</span></label>
+                <select id="member" name="member" required>
+                    <option value="">Select a member</option>
+                    <!-- Add your member options here -->
+                    <option value="Member1">Member 1</option>
+                    <option value="Member2">Member 2</option>
+                </select>
                 <button type="submit">Register</button>
             </form>
             <div id="result"></div>
@@ -256,73 +265,6 @@
     </div> 
 
     <script>
-        const fileUrl = 'https://cdn.webinar.net/resources/cbe29169-251d-44be-a1f6-c71f4a586cb2.txt';
-
-        let selectedName = '';
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-            fetch(fileUrl)
-                .then(response => response.text())
-                .then(data => {
-                    const names = data.split('\n').map(name => name.trim()).filter(name => name.length > 0);
-                    names.sort((a, b) => a.localeCompare(b)); // Sort names alphabetically
-                    populateDropdown(names);
-                });
-        });
-
-        function populateDropdown(names) {
-            const dropdown = document.getElementById('dropdown-content');
-            dropdown.innerHTML = ''; // Clear existing options
-            names.forEach(name => {
-                const option = document.createElement('a');
-                option.textContent = name;
-                option.href = "#";
-                option.onclick = () => {
-                    selectedName = name;
-                    const input = document.getElementById('searchInput');
-                    input.value = name;
-                    filterFunction(); // Ensure dropdown closes after selection
-                };
-                dropdown.appendChild(option);
-            });
-        }
-
-        function splitName(name) {
-            const parts = name.split(' ');
-            const midIndex = Math.floor(parts.length / 2);
-            const firstName = parts.slice(0, midIndex).join(' ');
-            const lastName = parts.slice(midIndex).join(' ');
-            return [firstName, lastName];
-        }
-
-        function filterFunction() {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toUpperCase();
-            const div = document.getElementById('dropdown-content');
-            const a = div.getElementsByTagName('a');
-            for (let i = 0; i < a.length; i++) {
-                const txtValue = a[i].textContent || a[i].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    a[i].style.display = "";
-                } else {
-                    a[i].style.display = "none";
-                }
-            }
-            div.classList.add('show');
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.matches('#searchInput')) {
-                const dropdowns = document.getElementsByClassName("dropdown-content");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    const openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -339,25 +281,20 @@
             event.preventDefault();  // Prevent the default form submission
 
             var title = getUrlParameter('userID');
-            var name = document.getElementById('searchInput').value;
-            var [firstName, lastName] = splitName(name);
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
             var email = document.getElementById('email').value;
-            var company = document.getElementById('company').value;
-            
-            var fields = [
-                { value: name, element: document.getElementById('searchInput') },
-                { value: email, element: document.getElementById('email') },
-                { value: company, element: document.getElementById('company') },
-            ];
-            
+            var member = document.getElementById('member').value;
+
             if (lastName !== '') {
-                lastName = `${lastName} MFDA#${title}`;       
+                lastName = `${lastName} MFDA#${title}`;
             }
-            
-            var valid = true;
-            if (valid) {
-                var registerUrl = `https://join.webinar.net/ybNmM5BDgX5/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(company)}&title=${encodeURIComponent(title)}`;
+
+            if (firstName && lastName && validateEmail(email) && member) {
+                var registerUrl = `https://join.webinar.net/ybNmM5BDgX5/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(member)}&title=${encodeURIComponent(title)}`;
                 window.location.href = registerUrl;
+            } else {
+                alert("Please fill out all required fields.");
             }
         }
     </script>
