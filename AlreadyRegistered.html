@@ -369,10 +369,52 @@
             
             var valid = true;
             if (valid) {
-                var registerUrl = `https://join.webinar.net/ybNmM5BDgX5/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(company)}&title=${encodeURIComponent(title)}`;
-                window.location.href = registerUrl;
+                var redirectToURLTY = 'https://app.webinar.net/ybNmM5BDgX5/thank-you';
+                var redirectToURLEvent = 'https://join.webinar.net/ybNmM5BDgX5/start?emailAddress=';			
+				var redirectToAPI = 'https://registration.webinar.net/integration/1e0e7c75-9e54-4f19-a1f4-f48f26f47947/666750ef4deefc5bc15e6a33';
+
+                // Webinar Open Switch
+				var switchOnOff = 'Open'
+                
+                // Set Email Address
+				let emailField = document.getElementById('email');
+
+                var wFields = ['firstName', 'lastName', 'emailAddress', 'company'];
+                var data = {};
+
+                // Get the full name from an input field
+                var fullName = document.getElementById('fullName').value;
+                var [firstName, lastName] = splitName(fullName);
+
+                data['firstName'] = firstName;
+                data['lastName'] = lastName;
+
+                for (var j = 2; j < wFields.length; j++) {
+                    data[wFields[j]] = document.getElementById(wFields[j]).value;
+                }
+
+                console.table(data);
+				try {
+					const xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							 if (switchOnOff == 'TY') { 
+								// Redirect to the Thank You URL
+								location.assign(redirectToURLTY);
+							 } else {
+								// Redirect to the Event URL with an encoded query parameter
+								var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(emailField.value);
+								location.assign(redirectToURLEventEmail);
+								}
+							 }
+						};
+					xhr.open('POST', redirectToAPI);
+					xhr.setRequestHeader('Content-Type', 'application/json');
+					xhr.send(JSON.stringify(data));
+				} catch (e) {
+					console.log('wrong');
+				}
             }
-        }
 
         function showEmailForm() {
             document.getElementById('registrationFormContainer').style.display = 'none';
