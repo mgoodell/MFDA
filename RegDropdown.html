@@ -349,12 +349,12 @@
                 { value: email, element: document.getElementById('email') },
                 { value: company, element: document.getElementById('company') },
             ];
-
-            var valid = true;
+            
             if (lastName !== '') {
                 lastName = `${lastName} MFDA#${title}`;       
             }
-
+            
+            var valid = true;
             if (valid) {
                 var registerUrl = `https://join.webinar.net/ybNmM5BDgX5/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(company)}&title=${encodeURIComponent(title)}`;
                 window.location.href = registerUrl;
