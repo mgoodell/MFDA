@@ -324,25 +324,10 @@
         }
 
         function getUrlParameter(name) {
-        // Get the full URL query string
-        var queryString = window.location.search.substring(1);
-        // Split the query string into key-value pairs
-        var params = queryString.split('&');
-        // Convert the desired parameter name to lowercase
-        var lowerName = name.toLowerCase();
-
-        // Loop through the parameters
-        for (var i = 0; i < params.length; i++) {
-            // Split each parameter into key and value
-            var param = params[i].split('=');
-            // Check if the parameter name matches (case-insensitive)
-            if (param[0].toLowerCase() === lowerName) {
-                // Return the value of the matching parameter
-                return param[1] === undefined ? true : decodeURIComponent(param[1]);
-            }
-          }
-        // Return null if the parameter was not found
-        return null;
+            title = title.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + title + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
         function validateEmail(email) {
