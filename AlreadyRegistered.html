@@ -379,6 +379,9 @@
                 // Set Email Address
 		let emailField = document.getElementById('email');
 
+		// Set Company 
+		var company = document.getElementById('company').value;
+
                 var wFields = ['firstName', 'lastName', 'email', 'company'];
                 var data = {};
 
@@ -386,11 +389,13 @@
 	        var name = document.getElementById('searchInput').value;
                 var [firstName, lastName] = splitName(name);
                 data['firstName'] = firstName;
-                data['lastName'] = lastName;
-
-                for (var j = 2; j < wFields.length; j++) {
-                    data[wFields[j]] = document.getElementById(wFields[j]).value;
-                }
+		
+		// Format last name    
+		var mfdaNumber = ' MFDA#'    
+                data['lastName'] =  lastName + mfdaNumber + company
+		
+		data['email'] = document.getElementById('email').value;
+		data['company'] = document.getElementById('company').value;
 
 		console.table(data);
 		try {
