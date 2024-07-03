@@ -385,7 +385,7 @@
             var email = document.getElementById('loginEmail').value;
 
             if (validateEmail(email)) {
-                var loginUrl = `https://join.webinar.net/ybNmM5BDgX5/start?emailAddres=${encodeURIComponent(email)}`;
+                var loginUrl = `https://join.webinar.net/ybNmM5BDgX5/launch?firstName=already&lastName=registered&emailAddress=${encodeURIComponent(email)}`;
                 window.location.href = loginUrl;
             } else {
                 alert('Please enter a valid email address.');
