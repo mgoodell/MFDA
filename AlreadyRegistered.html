@@ -349,61 +349,57 @@
         }
 
         function register(event) {
-            event.preventDefault();  // Prevent the default form submission
-            
-            var valid = true;
-            if (valid) {
-                var redirectToURLTY = 'https://app.webinar.net/ybNmM5BDgX5/thank-you';
-                var redirectToURLEvent = 'https://join.webinar.net/ybNmM5BDgX5/start?emailAddress=';			
-		var redirectToAPI = 'https://registration.webinar.net/integration/1e0e7c75-9e54-4f19-a1f4-f48f26f47947/666750ef4deefc5bc15e6a33';
+    	     event.preventDefault();  // Prevent the default form submission
 
-                // Webinar Open Switch
-		var switchOnOff = 'Open'
-                
-                // Set Email Address
-		let emailField = document.getElementById('email');
+    	     var valid = true;
+    	     if (valid) {
+        	var redirectToURLTY = 'https://app.webinar.net/ybNmM5BDgX5/thank-you';
+        	var redirectToURLEvent = 'https://join.webinar.net/ybNmM5BDgX5/start?emailAddress=';
+        	var redirectToAPI = 'https://registration.webinar.net/integration/1e0e7c75-9e54-4f19-a1f4-f48f26f47947/666750ef4deefc5bc15e6a33';
 
-		// Set Company
-		var company = document.getElementById('company').value;
+        	// Webinar Open Switch
+        	var switchOnOff = 'Open';
+        
+        	// Set Email Address
+        	var emailField = document.getElementById('email').value;
 
-		var wFields = ['firstName', 'lastName', 'email', 'company'];
-		var data = {};
+        	// Set Company
+        	var company = document.getElementById('company').value;
 
-		// Get the first and last name from dropdown
-		var name = document.getElementById('searchInput').value;
-		var [firstName, lastName] = splitName(name);
-		data['firstName'] = firstName;
+        	var wFields = ['firstName', 'lastName', 'email', 'company'];
+        	var data = {};
 
-		// Format last name
-		var mfdaNumber = ' MFDA#';
-		data['lastName'] = `${lastName}${mfdaNumber}${company}`;
-		
-		data['email'] = document.getElementById('email').value;
-		data['company'] = document.getElementById('company').value;
+        	// Get the first and last name from dropdown
+        	var name = document.getElementById('searchInput').value;
+        	var [firstName, lastName] = splitName(name);
+        	data['firstName'] = firstName;
 
-		console.table(data);
-		try {
-		    const xhr = new XMLHttpRequest();
-		     xhr.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-			    if (switchOnOff == 'TY') { 
-				// Redirect to the Thank You URL
-				location.assign(redirectToURLTY);
-			     } else {
-				// Redirect to the Event URL with an encoded query parameter
-				var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(email.value);
-				location.assign(redirectToURLEventEmail);
-			     }
-			 }
-		  };
-		  xhr.open('POST', redirectToAPI);
-		  xhr.setRequestHeader('Content-Type', 'application/json');
-		  xhr.send(JSON.stringify(data));
-		  } catch (e) {
-		     console.log('wrong');
-		  }
-            }	
-        }
+        	// Format last name
+        	var mfdaNumber = ' MFDA#';
+        	data['lastName'] = `${lastName}${mfdaNumber}${company}`;
+        
+        	data['email'] = emailField;
+        	data['company'] = company;
+
+        	console.table(data);
+
+        	try {
+            	const xhr = new XMLHttpRequest();
+            	xhr.onreadystatechange = function() {
+                	if (this.readyState == 4 && this.status == 200) {
+                    	var redirectTo = (switchOnOff == 'TY') ? redirectToURLTY : redirectToURLEvent + encodeURIComponent(emailField);
+                    	location.assign(redirectTo);
+                	}
+            	};
+            	xhr.open('POST', redirectToAPI);
+            	xhr.setRequestHeader('Content-Type', 'application/json');
+            	xhr.send(JSON.stringify(data));
+        	} catch (e) {
+            	console.log('An error occurred:', e);
+        	}
+    	}   
+	}
+
 	    
         function showEmailForm() {
             document.getElementById('registrationFormContainer').style.display = 'none';
