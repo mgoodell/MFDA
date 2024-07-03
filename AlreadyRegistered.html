@@ -379,7 +379,7 @@
                 // Set Email Address
 		let emailField = document.getElementById('email');
 
-                var wFields = ['firstName', 'lastName', 'emailAddress', 'company'];
+                var wFields = ['firstName', 'lastName', 'email', 'company'];
                 var data = {};
 
                 // Get the first and last name from dropdown
@@ -401,8 +401,8 @@
 				// Redirect to the Thank You URL
 				location.assign(redirectToURLTY);
 			     } else {
-				 // Redirect to the Event URL with an encoded query parameter
-				var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(emailField.value);
+				// Redirect to the Event URL with an encoded query parameter
+				var redirectToURLEventEmail = redirectToURLEvent + encodeURIComponent(email.value);
 				location.assign(redirectToURLEventEmail);
 			     }
 			 }
