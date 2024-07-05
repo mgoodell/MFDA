@@ -254,8 +254,10 @@
                 <label for="email">Email Address <span style="color: red;">*</span></label>
                 <input type="email" id="email" name="email" required>
                 <label for="mfda-note" style="display: block; margin-top: 10px; background-color:rgb(255,255,255);color:rgb(0,0,0);font-family:Arial, sans-serif;font-size:14px;"><strong>Please note that, unlike past compliance credits, you do not need to enter your MFDA ID#. The MFDA ID# is embedded in this link.</strong></label>
-                <label for="company">Member <span style="color: red;">*</span></label>
-                <input type="text" id="company" name="company" required>
+                <label for="company">Member Listing <span style="color: red;">*</span></label>
+                <select id="member" name="member" required>
+                    <option value="">Select a member</option>
+                </select>
                 <button type="submit">Register</button>
             </form>
         </div>
@@ -264,61 +266,58 @@
     <p>© 2024 webinar.net</p>
 </div> 
 
-<script>
-    function getUrlParameter(name) {
-    // Get the full URL query string
-    var queryString = window.location.search.substring(1);
-    // Split the query string into key-value pairs
-    var params = queryString.split('&');
-    // Convert the desired parameter name to lowercase
-    var lowerName = name.toLowerCase();
-
-    // Loop through the parameters
-    for (var i = 0; i < params.length; i++) {
-        // Split each parameter into key and value
-        var param = params[i].split('=');
-        // Check if the parameter name matches (case-insensitive)
-        if (param[0].toLowerCase() === lowerName) {
-            // Return the value of the matching parameter
-            return param[1] === undefined ? true : decodeURIComponent(param[1]);
-        }
-      }
-    // Return null if the parameter was not found
-    return null;
-    }
-
-    function validateEmail(email) {
-        var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        return re.test(String(email).toLowerCase());
-    }
-
-    function register(event) {
-        event.preventDefault();  // Prevent the default form submission
-
-        var title = getUrlParameter('userID');
-        var firstName = document.getElementById('firstName').value;
-        var lastName = document.getElementById('lastName').value;
-        var email = document.getElementById('email').value;
-        var company = document.getElementById('company').value;
-        
-        var fields = [
-            { value: firstName, element: document.getElementById('firstName') },
-            { value: lastName, element: document.getElementById('lastName') },
-            { value: email, element: document.getElementById('email') },
-            { value: company, element: document.getElementById('company') },
-        ];
-
-        var valid = true;
-        if (lastName !== '') {
-            lastName = `${lastName} MFDA#${title}`;
+    <script>
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        if (valid) {
-            var registerUrl = `https://join.webinar.net/8z3LPA2RbNd/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(company)}&title=${encodeURIComponent(title)}`;
-            window.location.href = registerUrl;
+        function validateEmail(email) {
+            var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            return re.test(String(email).toLowerCase());
         }
-    }
-</script>
+
+        function populateDropdown() {
+            const dropdown = document.getElementById('member');
+            fetch('https://cdn.webinar.net/resources/21c76452-e276-4ed0-8ee5-43b175257d90.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const lines = data.split('\n');
+                    lines.forEach(line => {
+                        const option = document.createElement('option');
+                        option.value = line.trim();
+                        option.text = line.trim();
+                        dropdown.add(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching dropdown values:', error));
+        }
+
+        function register(event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            var title = getUrlParameter('userID');
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            var email = document.getElementById('email').value;
+            var member = document.getElementById('member').value;
+
+            if (lastName !== '') {
+                lastName = `${lastName} MFDA#${title}`;
+            }
+
+            if (firstName && lastName && validateEmail(email) && member) {
+                var registerUrl = `https://join.webinar.net/8z3LPA2RbNd/launch?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&emailAddress=${encodeURIComponent(email)}&company=${encodeURIComponent(member)}&title=${encodeURIComponent(title)}`;
+                window.location.href = registerUrl;
+            } else {
+                alert("Please fill out all required fields.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', populateDropdown);
+    </script>
     
 </body>
 </html>
