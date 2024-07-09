@@ -286,7 +286,7 @@
 
         function populateDropdown() {
             const dropdown = document.getElementById('member');
-            fetch('https://cdn.webinar.net/resources/35984cc5-720e-4325-bd2b-e63bc966db95.txt')
+            fetch('https://mgoodell.github.io/MFDA/Members.txt')
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n');
