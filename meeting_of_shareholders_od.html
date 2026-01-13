@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Webinar Embed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff; /* white background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .embed-container {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      /* Maintains 16:9 Aspect Ratio */
+      aspect-ratio: 16 / 9;
+    }
+
+    .iframe-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="embed-container">
+    <iframe 
+      data-advancedhtml="" 
+      controls="" 
+      class="iframe-video" 
+      playsinline="1" 
+      allow="autoplay;fullscreen;camera;microphone;" 
+      src="https://app.webinar.net/5w4y82daoMd?autoPlay=true&embed=true">
+    </iframe>
+  </div>
+
+</body>
+</html>
