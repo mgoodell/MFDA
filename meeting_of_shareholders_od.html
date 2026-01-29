@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: #ffffff; /* white background */
+      background: #ffffff;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh; /* Changed to fixed height to prevent scrolling */
+      overflow: hidden; /* Keeps it contained */
     }
 
     .embed-container {
       position: relative;
-      width: 100%;
-      max-width: 960px;
-      /* Maintains 16:9 Aspect Ratio */
+      /* This line is the magic: it picks the smaller of the two sizes */
+      width: min(95vw, calc(95vh * 16 / 9)); 
       aspect-ratio: 16 / 9;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Optional: makes it pop */
     }
 
     .iframe-video {
@@ -38,7 +38,6 @@
   <div class="embed-container">
     <iframe 
       data-advancedhtml="" 
-      controls="" 
       class="iframe-video" 
       playsinline="1" 
       allow="autoplay;fullscreen;camera;microphone;" 
